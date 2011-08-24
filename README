@@ -1,2 +1,9 @@
 An implementation of "$1 Unistroke Recognizer" for libgdx.
+The current implementation uses the Protractor formula which renders the algorithm faster.
 
+
+For the time being, it will published as a snippet, later on it will composed as a library :P
+
+
+REQUIREMENTS:
+libgdx: any revision from svn that contains Json support (pretty recent).
