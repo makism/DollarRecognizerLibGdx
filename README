@@ -7,15 +7,15 @@ For the time being, it will published as a snippet, later on it will composed as
 
 TODO:
 * Add support for loading gestures from Json files, something like:
-  - addGestureFromFile(FileHandle ...),
+  - addGestureFromFile(FileHandle ...), (Done!)
   - addGesturesFromFile(FileHandle ...);
 * Make the recognizer run threaded if possible for each template gesture.
-* Seperate further into smaller classes.
-* Modify the settings via getter/setter methods.
+* Seperate further into smaller classes. (Done!)
+* Modify the settings via getter/setter methods. (Not needed - Settings are static)
 * Make the recognizer more event driven maybe provided as extra function.
 * Write an utility for generating gestures.
 * Provide links to the original js source, website and papers (Done!).
-* Provide sample gestures as Json files.
+* Provide sample gestures as Json files. (Done!)
 * Add a working example.
 * Pack to a damn jar!
 
