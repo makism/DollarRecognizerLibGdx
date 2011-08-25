@@ -1,8 +1,23 @@
-An implementation of "$1 Unistroke Recognizer" for libgdx.
+An implementation of "$1 Unistroke Recognizer" (http://depts.washington.edu/aimgroup/proj/dollar/)
+for libgdx based on the original js source :D
 The current implementation uses the Protractor formula which renders the algorithm faster.
 
 
 For the time being, it will published as a snippet, later on it will composed as a library :P
+
+TODO:
+* Add support for loading gestures from Json files, something like:
+  - addGestureFromFile(FileHandle ...),
+  - addGesturesFromFile(FileHandle ...);
+* Make the recognizer run threaded if possible for each template gesture.
+* Seperate further into smaller classes.
+* Modify the settings via getter/setter methods.
+* Make the recognizer more event driven maybe provided as extra function.
+* Write an utility for generating gestures.
+* Provide links to the original js source, website and papers (Done!).
+* Provide sample gestures as Json files.
+* Add a working example.
+* Pack to a damn jar!
 
 
 REQUIREMENTS:
