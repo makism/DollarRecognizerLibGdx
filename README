@@ -16,6 +16,7 @@ TODO:
 * Write an utility for generating gestures.
 * Provide links to the original js source, website and papers (Done!).
 * Provide sample gestures as Json files. (Done!)
+* Make more optimizations related with the data structures used.
 * Add a working example.
 * Pack to a damn jar!
 
