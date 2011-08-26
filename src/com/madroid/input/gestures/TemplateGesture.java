@@ -9,7 +9,7 @@ public class TemplateGesture {
 
 	private ArrayList<Vector2> points;
 
-	private Vector2[] vector;
+	private float[] vector;
 
 	public TemplateGesture(String name, ArrayList<Vector2> points) {
 		this.name = name;
@@ -18,13 +18,13 @@ public class TemplateGesture {
 	}
 
 	public TemplateGesture(String name, ArrayList<Vector2> points,
-			Vector2[] vector) {
+			float[] vector) {
 		this.name = name;
 		this.points = points;
 		this.vector = vector;
 	}
 
-	public Vector2[] getVector() {
+	public float[] getVector() {
 		return vector;
 	}
 
