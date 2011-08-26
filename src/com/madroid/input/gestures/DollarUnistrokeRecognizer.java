@@ -25,27 +25,28 @@ public class DollarUnistrokeRecognizer {
 	}
 
 	// This should be in "ProtractorGestureRecognizer" class :P.
-	public static Vector2[] Vectorize(ArrayList<Vector2> points) {
+	public static float[] Vectorize(ArrayList<Vector2> points) {
 		DollarUnistrokeRecognizer dollar = new DollarUnistrokeRecognizer(points);
 		dollar.Resample();
 		dollar.CalculateIndicativeAngle();
 		dollar.Rotate();
 		dollar.Scale();
 		dollar.Translate();
-
+		
 		float sum = 0.0f;
 		float magnitude = 0.0f;
-		Vector2[] vector = new Vector2[dollar.points.size()];
-		for (int i = 0; i < dollar.points.size(); i++) {
-			vector[i] = dollar.points.get(i);
-			sum += vector[i].x * vector[i].x + vector[i].y * vector[i].y;
+		float[] vector = new float[dollar.points.size() * 2];
+		int index = 0;
+		for (Vector2 v : dollar.points) {
+			vector[index++] = v.x;
+			vector[index++] = v.y;
+			
+			sum += v.x * v.x + v.y * v.y;
 		}
 
 		magnitude = (float) Math.sqrt(sum);
-		for (int i = 0; i < vector.length; i++) {
-			vector[i].x /= magnitude;
-			vector[i].y /= magnitude;
-		}
+		for (int i = 0; i < vector.length; i++)
+			vector[i] /= magnitude;
 
 		return vector;
 	}
@@ -69,7 +70,7 @@ public class DollarUnistrokeRecognizer {
 				q.y = prev.y + ((I - D) / d) * (curr.y - prev.y);
 
 				newPoints.add(q);
-				points.add(idx, q);
+				points.add(idx + 1, q);
 
 				D = 0.0f;
 			} else {
