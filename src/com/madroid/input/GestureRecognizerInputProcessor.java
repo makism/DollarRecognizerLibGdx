@@ -18,7 +18,8 @@ public class GestureRecognizerInputProcessor extends InputAdapter {
 		
 		recognizer = new ProtractorGestureRecognizer();
 		recognizer.addGestureFromFile(Gdx.files.internal("gestures/triangle.json"));
-		recognizer.addGestureFromFile(Gdx.files.internal("gestures/chi.json"));
+		recognizer.addGestureFromFile(Gdx.files.internal("gestures/x.json"));
+		recognizer.addGestureFromFile(Gdx.files.internal("gestures/rectangle.json"));
 		
 		originalPath = new ArrayList<Vector2>();
 	}
