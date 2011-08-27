@@ -23,6 +23,11 @@ public class ProtractorGestureRecognizer {
 	@SuppressWarnings("unchecked")
 	public void addGestureFromFile(FileHandle handle) {
 		if (!handle.isDirectory()) {
+			FileHandle[] files = handle.list("json");
+			for (FileHandle f : files)
+				addGestureFromFile(f);
+			
+		} else {
 			JsonReader jreader = new JsonReader();
 			ObjectMap obj = (ObjectMap) jreader.parse(handle);
 
@@ -30,6 +35,7 @@ public class ProtractorGestureRecognizer {
 			Array<ObjectMap<String, Float>> _points = (Array<ObjectMap<String, Float>>) obj
 					.get("Points");
 			Array<Float> _vector = (Array<Float>) obj.get("Vector");
+			// float[] _arr_vector = (float[]) obj.get("Vector");
 
 			ArrayList<Vector2> _arrlist_vector = new ArrayList<Vector2>();
 			for (int i = 0; i < _points.size; i++) {
