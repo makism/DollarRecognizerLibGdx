@@ -1,7 +1,8 @@
 package com.madroid.input.gestures;
 
 public class MatchingGesture {
-	private TemplateGesture gesture;
+	private TemplateGesture gesture;	
+
 	private float score;
 
 	public MatchingGesture(TemplateGesture gesture, float score) {
