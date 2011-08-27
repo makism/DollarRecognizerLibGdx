@@ -2,7 +2,6 @@ package com.madroid.input.gestures;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -23,26 +22,29 @@ public class ProtractorGestureRecognizer {
 
 	@SuppressWarnings("unchecked")
 	public void addGestureFromFile(FileHandle handle) {
-		JsonReader jreader = new JsonReader();
-		ObjectMap obj = (ObjectMap) jreader.parse(handle);
+		if (!handle.isDirectory()) {
+			JsonReader jreader = new JsonReader();
+			ObjectMap obj = (ObjectMap) jreader.parse(handle);
 
-		String _name = (String) obj.get("Name");
-		Array<Array> _points = (Array<Array>) obj.get("Points");
-		Array<Array> _vector = (Array<Array>) obj.get("Vector");
+			String _name = (String) obj.get("Name");
+			Array<ObjectMap<String, Float>> _points = (Array<ObjectMap<String, Float>>) obj
+					.get("Points");
+			Array<Float> _vector = (Array<Float>) obj.get("Vector");
 
-		ArrayList<Vector2> _arrlist_points = new ArrayList<Vector2>();
-		for (Array arr : _points) {
-			Vector2 v = new Vector2((Float) arr.get(0), (Float) arr.get(1));
-			_arrlist_points.add(v);
+			ArrayList<Vector2> _arrlist_vector = new ArrayList<Vector2>();
+			for (int i = 0; i < _points.size; i++) {
+				ObjectMap<String, Float> data = _points.get(i);
+				float x = (float) data.get("X");
+				float y = (float) data.get("Y");
+				_arrlist_vector.add(new Vector2(x, y));
+			}
+
+			float[] _arr_vector = new float[_vector.size];
+			for (int i = 0; i < _vector.size; i++)
+				_arr_vector[i] = _vector.get(i);
+
+			addGesture(new TemplateGesture(_name, _arrlist_vector, _arr_vector));
 		}
-
-		Vector2[] _arr_vector = new Vector2[_vector.size];
-		for (int i = 0; i < _vector.size; i++) {
-			Array arr = _vector.get(i);
-			_arr_vector[i] = new Vector2((Float) arr.get(0), (Float) arr.get(1));
-		}
-
-		addGesture(new TemplateGesture(_name, _arrlist_points, _arr_vector));
 	}
 
 	public void removeGesture(TemplateGesture tg) {
@@ -50,33 +52,31 @@ public class ProtractorGestureRecognizer {
 	}
 
 	public MatchingGesture Recognize(ArrayList<Vector2> originalPath) {
-		Vector2[] vector = DollarUnistrokeRecognizer.Vectorize(originalPath);
+		float[] vector = DollarUnistrokeRecognizer.Vectorize(originalPath);
 
+		TemplateGesture match = null;
 		float b = Float.POSITIVE_INFINITY;
-		int t = 0;
-		int i = 0;
 		for (TemplateGesture gesture : registeredGestures) {
 			float d = OptimalCosineDistance(gesture.getVector(), vector);
 
 			if (d < b) {
 				b = d;
-				t = i;
+				match = gesture;
 			}
-
-			i++;
 		}
 
-		return new MatchingGesture(registeredGestures.get(t), 1.0f / b);
+		return new MatchingGesture(match, 1.0f / b);
 	}
 
-	private float OptimalCosineDistance(Vector2[] v1, Vector2[] v2) {
+	private float OptimalCosineDistance(float[] v1, float[] v2) {
 		float a = 0.0f;
 		float b = 0.0f;
 		float angle = 0.0f;
 
-		for (int i = 0; i < v1.length; i += 2) {
-			a += v1[i].dot(v2[i]) + v1[i + 1].dot(v2[i + 1]);
-			b += v1[i].dot(v2[i + 1]) - v1[i + 1].dot(v2[i]);
+		int len = Math.min(v1.length, v2.length);
+		for (int i = 0; i < len; i += 2) {
+			a += v1[i] * v2[i] + v1[i + 1] * v2[i + 1];
+			b += v1[i] * v2[i + 1] - v1[i + 1] * v2[i];
 		}
 
 		angle = (float) Math.atan(b / a);
